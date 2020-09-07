@@ -2,19 +2,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
+using API.Errors;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[Controller]")]
-    public class ProductsController : ControllerBase
+    public class ProductsController : BaseApiController
     {
         private readonly IGenericRepository<Product> _productsRepo;
         private readonly IGenericRepository<ProductType> _productsTypeRepo;
@@ -38,28 +38,41 @@ namespace API.Controllers
 
             var products = await _productsRepo.ListAsync(spec);
 
-            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
+            var productsToReturn = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
+
+            return Ok(productsToReturn);
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             var spec = new ProductWithBrandsAndTypesSpecification(id);
+            
             var product = await _productsRepo.GetEntityWithSpec(spec);
             
-            return Ok(_mapper.Map<Product, ProductToReturnDto>(product));
+            if(product == null) return NotFound(new ApiResponse(404));
+
+            var productToReturn = _mapper.Map<Product, ProductToReturnDto>(product);
+
+            return Ok(productToReturn);
         }
 
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
-            return Ok(await _productsBrandRepo.ListAllAsync());
+            var productBrandsToReturn = await _productsBrandRepo.ListAllAsync();
+
+            return Ok(productBrandsToReturn);
         }
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
         {
-            return Ok(await _productsTypeRepo.ListAllAsync());
+            var productTypesToReturn = await _productsTypeRepo.ListAllAsync();
+
+            return Ok(productTypesToReturn);
         }
     }
 }
