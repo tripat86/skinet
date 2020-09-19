@@ -12,5 +12,5 @@ This application is a proof of concept E-Commerce store using .net core web api 
 - Created mechanism to return all sort of errors like 401(Un-Authorized), 404( Bad-request - Not found ), 400( model Validation error ), 500( Internal Server error ) into a common object which has status and response properties.
 - Best OOPS practices used.
 - Added Generic Pagination class that can be used with any Entity to get paged results.
-- Integrated Swagger to allow client application developer to get the type of request and response for each API.
+- Integrated Swagger API documentation to allow client application developer to get the type of request and response for each API. Also customized the swagger documentation as per need.
 - Created extension methods to extend the IApplicationBuilder and IServiceCollection so that common code can be moved from startup class into these new extension methods, the purpose is to clean the startup class.
