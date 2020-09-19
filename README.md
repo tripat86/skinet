@@ -9,6 +9,6 @@ This application is a proof of concept E-Commerce store using .net core web api 
 - Automapper in ASP.NET Core
 - Paging, Sorting, Searching and Filtering
 - Created custom middleware to handle 500 Internal server errors
-- Created mechanism to return all sort of errors like 401, 404, 400, 500 into a common object which has status and response properties.
+- Created mechanism to return all sort of errors like 401(Un-Authorized), 404( Bad-request - Not found ), 400( model Validation error ), 500( Internal Server error ) into a common object which has status and response properties.
 - Best OOPS practices used.
 - Added Generic Pagination class that can be used with any Entity to get paged results.
