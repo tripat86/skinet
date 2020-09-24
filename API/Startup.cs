@@ -42,6 +42,7 @@ namespace API
             // This will handle both development and Production Errors.
             app.UseMiddleware<ExceptionMiddleware>();
 
+            // This is used for endpoints that does not exist in our system i.e 404 not found
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseHttpsRedirection();
