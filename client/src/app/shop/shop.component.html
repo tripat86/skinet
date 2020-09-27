@@ -8,7 +8,7 @@
       <h5 class="text-warning ml-3">Brands</h5>
       <ul class="list-group my-3">
         <li class="list-group-item" *ngFor="let brand of brands"
-        [class.active]="brand.id === this.brandIdSelected"
+        [class.active]="brand.id === this.shopParams.brandId"
         [value]="brand.id"
         (click)="onBrandSelected(brand.id)" 
         >
@@ -19,7 +19,7 @@
       <h5 class="text-warning ml-3">Types</h5>
       <ul class="list-group my-3">
         <li class="list-group-item" 
-        [class.active]="type.id === this.typeIdSelected"
+        [class.active]="type.id === this.shopParams.typeId"
         [value]="type.id"
         (click)="onTypeSelected(type.id)" *ngFor="let type of types">{{type.name}}</li>
       </ul>
@@ -27,20 +27,11 @@
 
     <section class="col-9">
       <div class="d-flex justify-content-between align-items-center pb-2">
-        <header>
-          <span
-            >Showing <strong>10</strong> of <strong>16</strong> Results</span
-          >
-        </header>
+      <app-paging-header [pageNumber]="this.shopParams.pageNumber" [pageSize]="this.shopParams.pageSize" [totalCount]="this.totalCount"></app-paging-header>
         <div class="form-inline mt-2">
-          <input
-            type="text"
-            class="form-control mr-2"
-            style="width: 300px"
-            placeholder="Search"
-          />
-          <button class="btn btn-outline-primary my-2">Search</button>
-          <button class="btn btn-outline-success ml-2 my-2">Reset</button>
+          <input type="text" class="form-control mr-2" (keyup.enter)="onSearch()" style="width: 300px" placeholder="Search" #search/>
+          <button class="btn btn-outline-primary my-2" (click)="onSearch()">Search</button>
+          <button class="btn btn-outline-success ml-2 my-2" (click)="onReset()">Reset</button>
         </div>
       </div>
       <div class="row">
@@ -48,6 +39,7 @@
           <app-product-item [product]="item"></app-product-item>
         </div>
       </div>
+      <app-pager [totalCount]="this.totalCount" [pageSize] = "this.shopParams.pageSize" (pageChanged)="onPageChanged($event)"></app-pager>
     </section>
   </div>
 </div>
