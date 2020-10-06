@@ -1,4 +1,5 @@
 using API.Errors;
+using Core.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 
