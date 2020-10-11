@@ -12,6 +12,7 @@ import { HomeModule } from './home/home.module';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
+import { BasketModule } from './basket/basket.module';
 
 
 @NgModule({
@@ -24,9 +25,9 @@ import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     CoreModule,
-    SharedModule,
     HomeModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    BasketModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

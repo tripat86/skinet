@@ -12,7 +12,11 @@ const routes: Routes = [
   {path: 'server-error', component: ServerErrorComponent, data: {breadcrumb: 'Server Error'}},
   {path: 'test-error', component: TestErrorComponent, data: {breadcrumb: 'Test Errors'}},
   {path: 'shop', loadChildren: () => import('./shop/shop.module').then(mod => mod.ShopModule),
-  data: {breadcrumb: 'Shop'}}, // This is lazy loading of module.
+  data: {breadcrumb: 'Shop'}}, // This is lazy loading of module.,
+  {path: 'basket', loadChildren: () => import('./basket/basket.module').then(mod => mod.BasketModule),
+  data: {breadcrumb: 'Basket'}}, // This is lazy loading of module.
+  {path: 'checkout', loadChildren: () => import('./checkout/checkout.module').then(mod => mod.CheckoutModule),
+  data: {breadcrumb: 'Checkout'}}, // This is lazy loading of module.
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 
